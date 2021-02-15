@@ -1,0 +1,27 @@
+#!/bin/bash
+
+
+#2. Что выведут команды (и в каком случае):
+#echo \** | wc -с
+#echo \l* | wc -с
+#echo a ~b | wc -с
+#echo a ~/b | wc -с
+
+
+#echo adds a newline character to end of the output by default, unless invoked with -n option which ommits the trailing newline 
+#So 'echo \**|wc -c'  = 3 
+# But 'echo -n \**|wc -c' =2
+
+#The wc -c option print the byte counts. And each character = 1 byte. Also take into account the spaces and the newline as 1 character.
+# The symbol '\' prevent or escape the interpretation of a character, so echo \** prints **, because remove the behaviour of the metacharacter '*'
+
+echo \**|wc -c # = \**= 2 bytes + the newline = 1 byte = 3 bytes in total.
+
+echo \l*|wc -c # = \l* = 2 bytes + the newline = 1 byte = 3 bytes in total.
+
+echo a ~b|wc -c # = a = 1 byte, space= 1 byte,~b= 2 bytes, newline= 1 byte, in total 5 bytes.
+
+echo a ~/b|wc -c # = 15 Because a = 1 character = 1 byte
+				# and 'echo ~/b' prints /home/juan/b, since ~ means the home file. So if we count the bytes of /home/juan/b= 12 since are 12 characters
+				#So we have 1 byte from the 'a' 12 bytes from '~/b', 1 byte for the space, and 1 byte from the newline character produce by the echo command.
+				#That means the we have in total= 1 + 12 +1 +1 =15 bytes.

@@ -1,0 +1,49 @@
+#!/bin/bash
+
+
+#1. Что делают команды:
+#cat >f1 <stop
+#cat >f1 <<stop
+#cat >>f1 <<stop
+#cat >f1 <<<stop
+
+echo "File1" > f1
+echo "StopFile" > stop
+
+#overwrites the content in the f1, with the content of the stop.
+#Using the input redirection, sending the stop content to cat command as an input.
+cat >f1 <stop
+
+#Tests 
+cat f1 # Should print StopFile
+cat stop # Should print StopFile
+
+#Sets stop as the keyword to breake the cycle, otherwise it waits for a new line.
+#When we write stop, the content of f1 will be overwrite with what we wrote before, because of the thanks to the output redirection ">".
+cat >f1 << stop
+Juan
+Sebastian
+Velasquez
+Acevedo
+stop
+
+#Tests
+cat f1 # Should print Juan/n Sebastian/n Velasquez/n Acevedo
+cat stop # Should print StopFile
+
+#Sets stop as the keyword to breake the cycle, otherwise it waits for a new line.
+#When we write stop we will add what we wrote to the end of f1, because of the output append redirection ">>".
+cat >>f1 <<stop 
+Group: P3113
+Code:291005
+stop
+
+#Tests
+cat f1 # Should print Juan/n Sebastian/n Velasquez/n Acevedo/n Group: P3113/n Code:291005
+cat stop # Should print StopFile
+
+#<<< denotes a 'here string'. It passes the word on the right to the standard input of the cat on the left.
+# So we overwrite the content of f1, and replace it with the word 'stop'. It could be any word, even commands. 
+
+cat >f1 <<<stop
+ 

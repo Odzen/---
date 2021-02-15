@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#4. Какие права доступа надо иметь на директорию, чтобы выполнить команды:
+#touch d1/f1
+#cat d1/f1
+#cat d1/f*
+#rm d1/f1
+#ln d1/f1 d1/f2
+
+mkdir d1 # Aux command to create the directory d1, since the touch command cannot create a directory.
+
+# if we do ls -l the directory d1 has the permissions "drwxrwxr-x" 
+
+touch d1/f1 # The directory 'd1' has to have the permission for writing and execute activate to create the file 'f1'. 
+			# So +w to create the file and +x to access in its inode. 
+
+#Example: 
+#If we do chmod -w d1, to eliminate the writing permission for the directory, should print the error: touch: cannot make `touch ' on #D1 / f1': Permission denied 
+
+
+cat d1/f1 # It only needs the permission for execution, to access to file metadata. +x
+
+cat d1/f* # It needs the permission for execution and reading, +rx
+
+rm d1/f1 # It needs the both write (to modify the directory itself) and execute (to stat() the file's inode) permissions. +wx 
+
+touch d1/f1 #Aux to make work the next command
+
+# Create a hard link between f1 and f2. 
+ln d1/f1 d1/f2 # To create the hard-link between f1 and f1  will need write+execute permissions. +wx 
